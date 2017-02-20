@@ -1,0 +1,45 @@
+page-search {
+
+  .toggle_filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .select_filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .label {
+    color: #000 !important;
+  }
+
+  ion-list {
+    margin-bottom: 0 !important;
+  }
+
+
+  .alert-checkbox-label {
+    white-space: normal !important;
+  }
+
+
+
+  .alert-radio-label {
+    white-space: normal !important;
+  }
+
+  .college_stats_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .search_item {
+    padding-left: 5px !important;
+  }
+
+}

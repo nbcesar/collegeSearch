@@ -1,0 +1,254 @@
+
+<ion-content padding fullscreen class="no-scroll">
+
+  <ion-slides>
+
+    <ion-slide class="slide1">
+      <ion-row class="inputs">
+        <ion-col>
+          <form [formGroup]="slideOneForm" novalidate>
+            <ion-item>
+              <ion-label stacked>First Name</ion-label>
+              <ion-input formControlName="firstName" type="text" placeholder="First Name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Email</ion-label>
+              <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Password</ion-label>
+              <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+            </ion-item>
+          </form>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="buttons">
+        <ion-col>
+          <button class="next-button" ion-button icon-only color="dark" (click)="next()">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-slide>
+
+    <ion-slide class="slide2">
+
+      <ion-row class="gpa-radio">
+        <ion-col radio-group [(ngModel)]="gpaScale">
+          <ion-item>
+            <ion-label>100</ion-label>
+            <ion-radio value="100"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>4.0</ion-label>
+            <ion-radio value="4"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="gpa-values">
+        <ion-col>
+          <span *ngIf="gpaScale=='4'">{{ gpa4 / 10 }}</span>
+          <span *ngIf="gpaScale=='100'">{{ gpa100 }}</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="gpa-ranges">
+        <ion-col>
+          <ion-range *ngIf="gpaScale=='100'" [(ngModel)]="gpa100" min="65" max="100" >
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+          <ion-range *ngIf="gpaScale=='4'" [(ngModel)]="gpa4" min="20" max="40">
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="buttons">
+        <ion-col>
+          <button class="prev-button" ion-button icon-only color="dark" (click)="prev()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button class="next-button" ion-button icon-only color="dark" (click)="next()">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-slide>
+
+    <ion-slide class="slide3">
+
+      <ion-row class="test-radio">
+        <ion-col radio-group [(ngModel)]="test">
+          <ion-item>
+            <ion-label>SAT</ion-label>
+            <ion-radio value="SAT"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>ACT</ion-label>
+            <ion-radio value="ACT"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="sat-ranges" *ngIf="test=='SAT'">
+        <ion-col>
+          <ion-item>
+            <ion-label>SAT M: {{ satM }}</ion-label>
+            <ion-range [(ngModel)]="satM" min="200" max="800" step="10" tappable>
+              <ion-icon range-left name="arrow-back"></ion-icon>
+              <ion-icon range-right name="arrow-forward"></ion-icon>
+            </ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-label>SAT R: {{ satR }}</ion-label>
+            <ion-range [(ngModel)]="satR" min="200" max="800" step="10" tappable>
+              <ion-icon range-left name="arrow-back"></ion-icon>
+              <ion-icon range-right name="arrow-forward"></ion-icon>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="act-ranges" *ngIf="test=='ACT'">
+        <ion-col>
+          <ion-item tappable>
+            <ion-label>ACT: {{ actC }}</ion-label>
+            <ion-range [(ngModel)]="actC" min="1" max="36">
+              <ion-icon range-left name="arrow-back"></ion-icon>
+              <ion-icon range-right name="arrow-forward"></ion-icon>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row class="buttons">
+        <ion-col>
+          <button class="prev-button" ion-button icon-only color="dark" (click)="prev()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button class="next-button" ion-button icon-only color="dark" (click)="next()">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-slide>
+
+    <ion-slide class="slide4">
+      <ion-row class="inputs">
+        <ion-col>
+          <form [formGroup]="slideFourForm" novalidate>
+            <ion-item>
+              <ion-label stacked>State</ion-label>
+              <ion-select formControlName="state">
+                  <ion-option value="AL">AL</ion-option>
+                  <ion-option value="AK">AK</ion-option>
+                  <ion-option value="AZ">AZ</ion-option>
+                  <ion-option value="AR">AR</ion-option>
+                  <ion-option value="CA">CA</ion-option>
+                  <ion-option value="CO">CO</ion-option>
+                  <ion-option value="CT">CT</ion-option>
+                  <ion-option value="DE">DE</ion-option>
+                  <ion-option value="FL">FL</ion-option>
+                  <ion-option value="GA">GA</ion-option>
+                  <ion-option value="HI">HI</ion-option>
+                  <ion-option value="ID">ID</ion-option>
+                  <ion-option value="IL">IL</ion-option>
+                  <ion-option value="IN">IN</ion-option>
+                  <ion-option value="IA">IA</ion-option>
+                  <ion-option value="KS">KS</ion-option>
+                  <ion-option value="KY">KY</ion-option>
+                  <ion-option value="LA">LA</ion-option>
+                  <ion-option value="ME">ME</ion-option>
+                  <ion-option value="MD">MD</ion-option>
+                  <ion-option value="MA">MA</ion-option>
+                  <ion-option value="MI">MI</ion-option>
+                  <ion-option value="MN">MN</ion-option>
+                  <ion-option value="MS">MS</ion-option>
+                  <ion-option value="MO">MO</ion-option>
+                  <ion-option value="MT">MT</ion-option>
+                  <ion-option value="NE">NE</ion-option>
+                  <ion-option value="NV">NV</ion-option>
+                  <ion-option value="NH">NH</ion-option>
+                  <ion-option value="NJ">NJ</ion-option>
+                  <ion-option value="NM">NM</ion-option>
+                  <ion-option value="NY">NY</ion-option>
+                  <ion-option value="NC">NC</ion-option>
+                  <ion-option value="ND">ND</ion-option>
+                  <ion-option value="OH">OH</ion-option>
+                  <ion-option value="OK">OK</ion-option>
+                  <ion-option value="OR">OR</ion-option>
+                  <ion-option value="PA">PA</ion-option>
+                  <ion-option value="RI">RI</ion-option>
+                  <ion-option value="SC">SC</ion-option>
+                  <ion-option value="SD">SD</ion-option>
+                  <ion-option value="TN">TN</ion-option>
+                  <ion-option value="TX">TX</ion-option>
+                  <ion-option value="UT">UT</ion-option>
+                  <ion-option value="VT">VT</ion-option>
+                  <ion-option value="VA">VA</ion-option>
+                  <ion-option value="WA">WA</ion-option>
+                  <ion-option value="WV">WV</ion-option>
+                  <ion-option value="WI">WI</ion-option>
+                  <ion-option value="WY">WY</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Race/Ethnicity</ion-label>
+              <ion-select formControlName="race">
+                 <ion-option value="latino">Hispanic/Latino</ion-option>
+                 <ion-option value="black">Black/African American</ion-option>
+                 <ion-option value="white">White</ion-option>
+                 <ion-option value="asian">Asian/Pacific Islander</ion-option>
+                 <ion-option value="nativeAmerican">Native American/First Nations</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label stacked>Family Income</ion-label>
+              <ion-select formControlName="familyIncome">
+                <ion-option value="income1">$0-$30,000</ion-option>
+                <ion-option value="income2">$30,001-$48,000</ion-option>
+                <ion-option value="income3">$48,001-$75,000</ion-option>
+                <ion-option value="income4">$75,001-$110,000</ion-option>
+                <ion-option value="income5">$110,001+</ion-option>
+              </ion-select>
+            </ion-item>
+          </form>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="buttons">
+        <ion-col>
+          <button class="prev-button" ion-button icon-only color="dark" (click)="prev()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button class="next-button" ion-button color="danger" (click)="signUpUser()">
+            Let's Go
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-slide>
+
+  </ion-slides>
+
+  <div class="welcome-face">
+    <ion-list no-lines>
+      <ion-item text-wrap>
+        <ion-thumbnail item-right>
+          <img class="face" src="../assets/images/mr-cesar-face.png" />
+        </ion-thumbnail>
+        <h2>{{ welcomeMessage[slides.getActiveIndex()]}}</h2>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>

@@ -1,0 +1,175 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar #searchbar (ionInput)="getColleges($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <div *ngIf="!showResults">
+
+    <ion-list>
+      <ion-item>
+        <p>Search by name above. Use the Filter below</p>
+      </ion-item>
+      <!-- States-->
+      <ion-item>
+        <ion-label>State(s)</ion-label>
+        <ion-select [(ngModel)]="states" multiple="true" cancelText="Clear"
+          okText="Okay!" placeholder="All">
+          <ion-option>AL</ion-option> <ion-option>AK</ion-option>
+          <ion-option>AZ</ion-option> <ion-option>AR</ion-option>
+          <ion-option>CA</ion-option> <ion-option>CO</ion-option>
+          <ion-option>CT</ion-option> <ion-option>DE</ion-option>
+          <ion-option>FL</ion-option> <ion-option>GA</ion-option>
+          <ion-option>HI</ion-option> <ion-option>ID</ion-option>
+          <ion-option>IL</ion-option> <ion-option>IN</ion-option>
+          <ion-option>IA</ion-option> <ion-option>KS</ion-option>
+          <ion-option>KY</ion-option> <ion-option>LA</ion-option>
+          <ion-option>ME</ion-option> <ion-option>MD</ion-option>
+          <ion-option>MA</ion-option> <ion-option>MI</ion-option>
+          <ion-option>MN</ion-option> <ion-option>MS</ion-option>
+          <ion-option>MO</ion-option> <ion-option>MT</ion-option>
+          <ion-option>NE</ion-option> <ion-option>NV</ion-option>
+          <ion-option>NH</ion-option> <ion-option>NJ</ion-option>
+          <ion-option>NM</ion-option> <ion-option>NY</ion-option>
+          <ion-option>NC</ion-option> <ion-option>ND</ion-option>
+          <ion-option>OH</ion-option> <ion-option>OK</ion-option>
+          <ion-option>OR</ion-option> <ion-option>PA</ion-option>
+          <ion-option>RI</ion-option> <ion-option>SC</ion-option>
+          <ion-option>SD</ion-option> <ion-option>TN</ion-option>
+          <ion-option>TX</ion-option> <ion-option>UT</ion-option>
+          <ion-option>VT</ion-option> <ion-option>VA</ion-option>
+          <ion-option>WA</ion-option> <ion-option>WV</ion-option>
+          <ion-option>WI</ion-option> <ion-option>WY</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Academics -->
+      <ion-item class="major_item">
+        <ion-label>Majors</ion-label>
+        <ion-select [(ngModel)]="majors" multiple="true" cancelText="Cancel" okText="Okay!" placeholder="Majors">
+
+          <ion-option *ngFor="let major of majorsList" value="{{major[0]}}">{{major[1]}}</ion-option>
+
+        </ion-select>
+      </ion-item>
+
+      <!-- Degree-->
+      <ion-item>
+        <ion-segment [(ngModel)]="college_degree" color="dark">
+          <ion-segment-button value="all">
+            Both
+          </ion-segment-button>
+          <ion-segment-button value="Associate's">
+            Associate's
+          </ion-segment-button>
+          <ion-segment-button value="Bachelor's">
+            Bachelor's
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+      <!-- Public/Private-->
+      <ion-item>
+        <ion-segment [(ngModel)]="college_control" color="dark">
+          <ion-segment-button value="all">
+            Both
+          </ion-segment-button>
+          <ion-segment-button value="Public">
+            Public
+          </ion-segment-button>
+          <ion-segment-button value="Private" >
+            Private
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+      <!-- Single Gender-->
+      <ion-item>
+        <ion-segment [(ngModel)]="college_gender" color="dark">
+          <ion-segment-button value="all">
+            Mixed
+          </ion-segment-button>
+          <ion-segment-button value="menonly" >
+            Men's
+          </ion-segment-button>
+          <ion-segment-button value="womenonly">
+            Women's
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+      <!-- Single Gender-->
+      <ion-item>
+        <ion-segment [(ngModel)]="college_type" color="dark">
+          <ion-segment-button value="all">
+            All
+          </ion-segment-button>
+          <ion-segment-button value="hbcu">
+            HBCU
+          </ion-segment-button>
+          <ion-segment-button value="pbi" >
+            PBI
+          </ion-segment-button>
+          <ion-segment-button value="hsi">
+            HSI
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+
+    </ion-list>
+
+    <!-- liberal arts / test optional -->
+
+    <ion-row>
+      <ion-col width-50 class="toggle_filter">
+        <ion-toggle [(ngModel)]="test_optional" checked="false" color="dark"></ion-toggle>
+        <ion-label> Test-Optional Only</ion-label>
+
+      </ion-col>
+      <ion-col width-50 class="toggle_filter">
+        <ion-toggle [(ngModel)]="liberal_arts" checked="false" color="dark"></ion-toggle>
+        <ion-label> Liberal Arts Only</ion-label>
+
+      </ion-col>
+    </ion-row>
+
+  </div>
+
+  <ion-list *ngIf="showResults">
+    <ion-item *ngIf="filteredColleges.length == 0">
+      <h1>No matches found.</h1>
+      <h2>Try adjusting the filters.</h2>
+    </ion-item>
+
+    <ion-item class="search_item" no-padding text-wrap tappable
+      *ngFor="let college of filteredColleges" (click)="goToCollege(college.unitid)">
+      <h2>{{ college.instnm }}</h2>
+      <p> {{ college.city}}, {{ college.state}}</p>
+
+      <ion-row class="college_stats_row">
+        <ion-col>
+          <p>Grad Rate</p>
+          <h2><span *ngIf="college.grad_rate != 'NULL'">{{ college.grad_rate | percent:'1.0-0' }}</span></h2>
+        </ion-col>
+        <ion-col>
+          <p>Retention Rate</p>
+          <h2><span *ngIf="college.retention_rate != 'NULL'">{{ college.retention_rate | percent:'1.0-0' }}</span></h2>
+        </ion-col>
+        <ion-col>
+          <p>Admit Rate</p>
+          <h2><span *ngIf="college.adm_rate != 'NULL'">{{ college.adm_rate | percent:'1.0-0' }}</span></h2>
+        </ion-col>
+      </ion-row>
+
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button *ngIf="!showResults" ion-button color="dark" block (click)="getColleges()">Search</button>
+    <button *ngIf="showResults" ion-button color="dark" block (click)="clearResults()">Clear Results</button>
+  </ion-toolbar>
+</ion-footer>

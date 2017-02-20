@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Chat
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines>
+    <ion-list-header>Welcome to the Mr. Cesar app</ion-list-header>
+    <ion-item text-wrap *ngFor="let message of chatList">
+      <ion-avatar item-left>
+        <img src="../assets/images/mr-cesar-face.png">
+      </ion-avatar>
+      <h2>{{ message }}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

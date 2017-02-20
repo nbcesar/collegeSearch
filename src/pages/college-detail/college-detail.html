@@ -1,0 +1,158 @@
+<!--
+  Generated template for the CollegeDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ collegeData?.instnm }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-row>
+    <ion-col>
+      <h1>
+        {{ collegeData?.instnm }}
+        <ion-icon name="list-box" *ngIf="inList"></ion-icon>
+      </h1>
+      <p class="college_info_text">
+        {{ collegeData?.city }}, {{ collegeData?.stabbr }}
+        <ion-icon *ngIf="collegeData?.womenonly" name="female"></ion-icon>
+        <ion-icon *ngIf="collegeData?.menonly" name="male"></ion-icon>
+      </p>
+
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <p class="college_info_text">{{ collegeData?.locale }}</p>
+    </ion-col>
+    <ion-col>
+      <p class="college_info_text">{{ collegeData?.control }}</p>
+    </ion-col>
+  </ion-row>
+
+  <hr />
+  <!-- Outcome data -->
+  <ion-row>
+    <ion-col width-75><h3>Graduation Rate</h3></ion-col>
+    <ion-col width-25><h3>{{ collegeData?.grad_rate | percent:'1.0-0'}}</h3></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <canvas #gradCanvas></canvas>
+    </ion-col>
+  </ion-row>
+  <ion-row class="pie_row">
+    <ion-col width-33>
+      <canvas #retentionCanvas class="doughnut_canvas"></canvas>
+      <p>Retention Rate</p>
+    </ion-col>
+    <ion-col width-33>
+      <canvas #admitCanvas></canvas>
+      <p>Admit Rate</p>
+    </ion-col>
+  </ion-row>
+
+  <hr />
+  <!-- Student demographics -->
+  <ion-row>
+    <ion-col width-75><h3># of Students</h3></ion-col>
+    <ion-col width-25><h3>{{ collegeData?.ugds }}</h3></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <canvas #studentsCanvas></canvas>
+    </ion-col>
+  </ion-row>
+
+  <hr  />
+  <!-- Test Scores -->
+  <div *ngIf="collegeData">
+    <ion-row>
+      <ion-col width-66>
+        <h3>Test Scores</h3>
+      </ion-col>
+      <ion-col width-33>
+        <p class="college_info_text">25th-75th</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="test_row">
+      <ion-col class="test_col">
+        <ion-range class="test_range" min="200" max="800" color="dark" disabled="true"
+        dualKnobs="true" [(ngModel)]="satVR" pin="true">
+          <ion-label range-left>200</ion-label>
+          <ion-label range-right>800</ion-label>
+        </ion-range>
+      </ion-col>
+      <ion-col class="test_col">SAT VR</ion-col>
+    </ion-row>
+    <ion-row class="test_row">
+      <ion-col class="test_col">
+        <ion-range class="test_range" min="200" max="800" color="dark" disabled="true"
+        dualKnobs="true" [(ngModel)]="satMT" pin="true">
+          <ion-label range-left>200</ion-label>
+          <ion-label range-right>800</ion-label>
+        </ion-range>
+      </ion-col>
+      <ion-col class="test_col">SAT Math</ion-col>
+    </ion-row>
+  </div>
+
+  <hr  />
+  <!-- Popular Majors -->
+  <div *ngIf="popMajors">
+    <ion-row>
+      <ion-col>
+        <h3>Popular Majors</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let major of popMajors; let i = index">
+      <ion-col width-20>
+        <h4>{{ major[0] | percent: '1.0-0' }}</h4>
+      </ion-col>
+      <ion-col text-wrap width-80>
+        <p class="major_name">{{ major[1] }}</p>
+      </ion-col>
+    </ion-row>
+
+  </div> <!-- Pop majors -->
+
+  <hr  />
+  <!-- Income-->
+  <ion-row class="income_stats">
+    <ion-col text-center>
+      <h3 class="income_header">{{ collegeData?.md_earn_wne_p10 | currency:'USD':true }}</h3>
+      <p class="college_info_text"> Average income after 10 years.</p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-center width-50>
+      <h5 class="income_header">{{ collegeData?.grad_debt_mdn_supp | currency:'USD':true }}</h5>
+      <p class="college_info_text">Average Debt</p>
+    </ion-col>
+    <ion-col text-center width-50>
+      <h5 class="income_header">{{ collegeData?.grad_debt_mdn10yr_supp | currency:'USD':true }}</h5>
+      <p class="college_info_text">Average Payment</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-fab bottom right>
+    <button ion-fab mini color="light">
+       <ion-icon name="add"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="secondary" (click)="toggleList()">
+        <ion-icon name="add" *ngIf="!inList"></ion-icon>
+        <ion-icon name="close" *ngIf="inList"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

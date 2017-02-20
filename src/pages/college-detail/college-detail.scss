@@ -1,0 +1,51 @@
+page-college-detail {
+
+  .college_info_text {
+    margin-top: 2px;
+    margin-bottom: 0;
+    color: #505050;
+  }
+
+  .pie_row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+
+  .majors_row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+  }
+
+  .major_name {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .test_row {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+
+  .test_col {
+    padding: 0;
+  }
+
+  .test_range {
+    padding: 0;
+  }
+
+  .range-md .range-pin, .range-ios .range-pin {
+    -webkit-transform: translate3d(0, 0, 0) scale(1) !important;
+    transform        : translate3d(0, 0, 0) scale(1) !important;
+  }
+
+  .income_header {
+    margin-bottom: 0;
+  }
+
+}

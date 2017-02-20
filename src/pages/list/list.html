@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      My List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list reorder="true" (ionItemReorder)="reorderItems($event)">
+    <ion-item *ngFor="let college of myList | async">
+      <h2>{{ college?.unitid }}: {{ college?.instnm }}</h2>
+      <p>{{ college?.city }}, {{ college?.stabbr}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
