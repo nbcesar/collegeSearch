@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, FabContainer } from 'ionic-angular';
+
+import { CollegeDetailPage } from '../college-detail/college-detail';
 
 import { Profile } from '../../providers/profile';
-
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { Colleges } from '../../providers/colleges';
 
 @Component({
   selector: 'page-list',
@@ -12,21 +13,43 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 export class ListPage {
 
   public myList;
+  public reOrder: Boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public profileService: Profile,
+    public collegeService: Colleges,
   ) {}
 
-  ionViewDidEnter() {
-    this.myList = this.profileService.getList();
+  ionViewDidLoad() {
+    this.myList = this.profileService.myList;
+  }
+
+  ionViewWillLeave() {
+    this.reOrder = false;
+  }
+
+  toggleReorder(fab: FabContainer) {
+    fab.close();
+    this.reOrder = !this.reOrder;
   }
 
   reorderItems(indexes) {
-    console.log(indexes);
-    this.myList.map(item => {
-      console.log(item);
-    }) as FirebaseListObservable<any[]>;
+    //console.log(indexes);
+    this.profileService.reOrderItems(indexes);
+    // this.myList.subscribe(item => {
+    //   console.log('reorder', item);
+    // });
   }
+
+  goToCollege(id) {
+    this.collegeService.getCollege(id)
+    .then(collegeData => {
+      this.navCtrl.push(CollegeDetailPage, {
+        collegeData: collegeData
+      });
+    });
+  }
+
 
 }

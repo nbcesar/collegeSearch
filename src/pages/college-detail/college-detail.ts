@@ -24,7 +24,7 @@ export class CollegeDetailPage {
   public popMajors: any;
   public satVR: Object;
   public satMT: Object;
-  public inList: any;
+  public inList: Boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -376,12 +376,20 @@ export class CollegeDetailPage {
   toggleList() {
     // if school not in list, add school
     if (!this.inList) {
-      this.profileService.addSchoolToList(this.collegeData); // TODO: Add promise handling
+      this.profileService.addSchoolToList(this.collegeData)
+        .catch(error => console.log(error))
+        .then(() => {
+          this.inList = true;
+        }); // TODO: Add promise handling
+
     } else {
       // if school in list, remove school
-      this.profileService.removeSchoolFromList(this.collegeData['unitid']);  // TODO: Add promise handling
+      this.profileService.removeSchoolFromList(this.collegeData['unitid'])
+        .catch(error => console.log(error))
+        .then(() => {
+          this.inList = false;
+        })// TODO: Add promise handling
     }
-    this.inList = !this.inList;
   }
 
 

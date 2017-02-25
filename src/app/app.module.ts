@@ -10,6 +10,8 @@ import { HomePage, LogInPage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 
+import { Storage } from '@ionic/storage';
+
 import { Colleges } from '../providers/colleges';
 import { Auth } from '../providers/auth';
 import { Profile } from '../providers/profile';
@@ -64,7 +66,8 @@ const myFirebaseAuthConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Colleges,
     Auth,
-    Profile
+    Profile,
+    Storage
   ]
 })
 export class AppModule {}

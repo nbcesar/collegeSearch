@@ -1,17 +1,76 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      My List
-    </ion-title>
-  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-row>
+      <ion-col width-25 text-center class="toolbar-col">
+        <h2><ion-icon name="star"></ion-icon></h2>
+
+        <p>0/1</p>
+        <p>Moonshot</p>
+      </ion-col>
+      <ion-col width-25 text-center class="toolbar-col">
+        <h2><ion-icon name="color-wand"></ion-icon></h2>
+
+        <p>0/3</p>
+        <p>Reach</p>
+      </ion-col>
+      <ion-col width-25 text-center class="toolbar-col">
+        <h2><ion-icon name="disc"></ion-icon></h2>
+
+        <p>0/3</p>
+        <p>Target</p>
+      </ion-col>
+      <ion-col width-25 text-center class="toolbar-col">
+        <h2><ion-icon name="cog"></ion-icon></h2>
+
+        <p>0/2</p>
+        <p>Safety</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="progress-bar">
+      <ion-col>
+        <div class="progress-outer">
+          <div class="progress-inner"><!--[style.width]="50 + '%'"-->
+              50%
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list reorder="true" (ionItemReorder)="reorderItems($event)">
-    <ion-item *ngFor="let college of myList | async">
-      <h2>{{ college?.unitid }}: {{ college?.instnm }}</h2>
-      <p>{{ college?.city }}, {{ college?.stabbr}}</p>
+
+  <ion-list no-lines
+    [reorder]="reOrder" (ionItemReorder)="reorderItems($event)">
+    <ion-item text-wrap *ngFor="let college of myList | async; let i=index">
+      <ion-row>
+        <ion-col width-10 class="list-index">
+          <h2>{{ i + 1 }}</h2>
+        </ion-col>
+        <ion-col width-80 (click)="goToCollege(college.unitid)">
+          <h2>{{ college?.instnm }}</h2>
+          <p>{{ college?.city }}, {{ college?.stabbr}}</p>
+        </ion-col>
+        <ion-col width-10 class="list-buttons">
+          <h2><ion-icon ios="md-calendar" md="md-calendar"></ion-icon></h2>
+        </ion-col>
+      </ion-row>
     </ion-item>
   </ion-list>
+
+  <ion-fab bottom right #fab>
+    <button ion-fab mini color="dark">
+       <ion-icon name="options"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="secondary" (click)="toggleReorder(fab)">
+        <ion-icon name="reorder" *ngIf="!reOrder"></ion-icon>
+        <ion-icon name="close" *ngIf="reOrder"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>

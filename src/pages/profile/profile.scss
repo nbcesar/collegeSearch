@@ -1,3 +1,18 @@
 page-profile {
 
+  .profile-pic {
+
+  }
+
+  ion-item-divider .label{
+    font-weight: bold;
+  }
+
+  .text-input {
+    text-align: right !important;
+  }
+
+  .datetime-text:empty:not(:focus):before{
+    content: "Select a date"
+  }
 }
