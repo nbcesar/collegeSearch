@@ -33,35 +33,10 @@ export class MyApp {
     const authObserver = af.auth.subscribe( user => {
       if (user) {
         this.rootPage = TabsPage;
-        //authObserver.unsubscribe();
       } else {
         this.rootPage = HomePage;
-        //authObserver.unsubscribe();
       }
     });
-    // Initialize Firebase
-    // var config = {
-    //   apiKey: "AIzaSyAlOEP2BRgnfWTCjm7ccBb686uUjJsI9T0",
-    //   authDomain: "collegesearch-272e4.firebaseapp.com",
-    //   databaseURL: "https://collegesearch-272e4.firebaseio.com",
-    //   storageBucket: "collegesearch-272e4.appspot.com",
-    //   messagingSenderId: "232604844315"
-    // };
-    // firebase.initializeApp(config);
-
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   const root = app.getRootNav();
-    //   if (user) {
-    //     //root.setRoot(TabsPage);
-    //     this.zone.run(()=> {
-    //       this.nav.setRoot(TabsPage);
-    //     })
-    //   } else {
-    //     // No user is signed in.
-    //     root.setRoot(HomePage);
-    //
-    //   }
-    // });
   }
 
 }

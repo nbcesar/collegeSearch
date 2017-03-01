@@ -7,7 +7,7 @@ import { SearchPage } from '../pages/search/search';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CollegeDetailPage } from '../pages/college-detail/college-detail';
 import { HomePage, LogInPage } from '../pages/home/home';
-import { ProfilePage } from '../pages/profile/profile';
+import { ProfilePage, HSPage } from '../pages/profile/profile';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 
 import { Storage } from '@ionic/storage';
@@ -43,7 +43,8 @@ const myFirebaseAuthConfig = {
     HomePage,
     LogInPage,
     ProfilePage,
-    SignUpPage
+    SignUpPage,
+    HSPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -60,7 +61,8 @@ const myFirebaseAuthConfig = {
     HomePage,
     LogInPage,
     ProfilePage,
-    SignUpPage
+    SignUpPage,
+    HSPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

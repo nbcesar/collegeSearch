@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
 
 import firebase from 'firebase';
 
@@ -9,6 +9,7 @@ export class Colleges {
 
   public collegesRef = firebase.database().ref('/colleges');
   public allData = [];
+  public allHS = [];
 
   constructor(public http: Http) {
 
@@ -21,6 +22,11 @@ export class Colleges {
         //console.log(data);
         this.allData = data;
       });
+  }
+
+  getHS(state: string, query: string) {
+    return this.http.post('https://college-search-api.herokuapp.com/hs', {'state': state, 'query': query})
+      .map(res => res.json())
   }
 
   getCollege(id): Promise<any> {

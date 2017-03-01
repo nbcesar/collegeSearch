@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 import { Auth } from '../providers/auth';
-import firebase from 'firebase';
 
+import firebase from 'firebase';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Injectable()
@@ -17,7 +18,8 @@ export class Profile {
 
   constructor(
     public authService: Auth,
-    public af: AngularFire
+    public af: AngularFire,
+    public storage: Storage
   ) {
     this.currentUser = this.authService.getCurrentUser();
     this.profileRef = firebase.database().ref('/users').child(this.currentUser['uid']).child('profile');
@@ -86,6 +88,23 @@ export class Profile {
   removeSchoolFromList(unitid) {
     let ref = this.listRef.child(unitid).toString();
     return this.af.database.object(ref).remove();
+  }
+
+  updateProfile(profile) {
+    this.myProfile.set(profile);
+  }
+  updateHS(newSchool, oldSchoolCode) {
+    // Remove student from old /highSchools
+    firebase.database().ref('highSchools').child(oldSchoolCode).child(this.currentUser['uid']).remove();
+    // Add user to new /highSchools
+    firebase.database().ref('highSchools').child(newSchool.code).child(this.currentUser['uid']).set(true);
+    // Update user/profile/highSchool name
+    this.myProfile.update({highSchool:
+      {
+        name: newSchool.name,
+        code: newSchool.code
+      }
+    });
   }
 
 }

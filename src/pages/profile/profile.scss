@@ -12,7 +12,24 @@ page-profile {
     text-align: right !important;
   }
 
+  .name-email .text-input{
+    text-align: left !important;
+  }
+
   .datetime-text:empty:not(:focus):before{
     content: "Select a date"
+  }
+
+  ion-label {
+    color: #999 !important;
+  }
+
+  .item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+    border-bottom-color: #dedede !important;
+    box-shadow: inset 0 0 0 0 #dedede !important;
+  }
+
+  .text-input[disabled] {
+    opacity: 1 !important;
   }
 }

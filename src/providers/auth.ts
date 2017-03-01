@@ -7,6 +7,7 @@ import firebase from 'firebase';
 export class Auth {
 
   public usersRef = firebase.database().ref('/users');
+  public connected: Boolean; // TODO: Figure out how to make this an observable and subscribe to it
   fireAuth: any;
 
   constructor(public af: AngularFire) {
@@ -15,6 +16,17 @@ export class Auth {
         this.fireAuth = user.auth;
       }
     });
+
+    var connectedRef = firebase.database().ref(".info/connected");
+    connectedRef.on("value", snap => {
+      if (snap.val() === true) {
+        this.connected = true;
+      } else {
+        this.connected = false;
+      }
+      //console.log(this.connected);
+    });
+
   }
 
   getCurrentUser() {
@@ -36,11 +48,18 @@ export class Auth {
   signUpUser(userData) {
     return this.af.auth.createUser({email: userData.email, password: userData.password})
       .then( newUser => {
+        if (userData.test == 'SAT') userData.actC = '';
+        else if (userData.test == 'ACT') { userData.satM = ''; userData.satR = '';}
+        if (userData.gpaScale == "100") userData.gpa = userData.gpa100;
+        else userData.gpa = userData.gpa4;
+        delete userData['gpa100'];
+        delete userData['gpa4'];
+
         this.usersRef.child(newUser.uid).child('profile').set({
+          email: userData.email,
           firstName: userData.firstName,
           gpaScale: userData.gpaScale,
-          gpa100: userData.gpa100,
-          gpa4: userData.gpa4,
+          gpa: userData.gpa,
           test: userData.test,
           satM: userData.satM,
           satR: userData.satR,
