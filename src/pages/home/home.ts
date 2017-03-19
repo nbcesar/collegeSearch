@@ -1,9 +1,11 @@
-import { Component, ViewChild,  } from '@angular/core';
-import { NavController, NavParams, Slides,
-         ModalController, Platform, ViewController } from 'ionic-angular';
-import { FormBuilder, Validators, FormControl }          from '@angular/forms';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ModalController, Platform, ViewController, AlertController, LoadingController } from 'ionic-angular';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { ValidationService } from '../../validators/validators';
 
 import { SignUpPage } from '../sign-up/sign-up';
+import { LogInPage } from '../login-modal/login-modal';
 
 import { Auth } from '../../providers/auth';
 
@@ -13,7 +15,9 @@ import { Auth } from '../../providers/auth';
 })
 export class HomePage {
 
-  @ViewChild(Slides) slides: Slides;
+  public welcome_text: string = `Hi. I'm Mr. Cesar.`;
+  public welcome_messages = [];
+  public message_count = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -23,7 +27,23 @@ export class HomePage {
   ) {}
 
   ionViewDidLoad() {
+    this.welcome_messages = [
+      `The Digital College Counselor`,
+      `Let's get started.`,
+    ];
 
+    // setTimeout(() => {
+    //   this.welcome_text = ``;
+    // }, 3000);
+    // setTimeout(() => {
+    //   this.welcome_text = this.welcome_messages[0];
+    // }, 5000);
+    // setTimeout(() => {
+    //   this.welcome_text = ``;
+    // }, 8000);
+    // setTimeout(() => {
+    //   this.welcome_text = this.welcome_messages[1];
+    // }, 10000);
   }
 
   signUpForm() {
@@ -33,69 +53,6 @@ export class HomePage {
   logInForm() {
     let modal = this.modalCtrl.create(LogInPage);
     modal.present();
-  }
-
-}
-
-@Component({
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Sign in
-        </ion-title>
-        <ion-buttons left>
-          <button ion-button (click)="dismiss()">
-            <ion-icon name="md-close"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content padding>
-      <h1 class="test">Welcome Back</h1>
-      <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
-        <ion-item>
-          <ion-label stacked>Email</ion-label>
-          <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Password</ion-label>
-          <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-        </ion-item>
-        <button ion-button block type="submit" color="dark" [disabled]="!loginForm.valid">Login</button>
-      </form>
-    </ion-content>
-  `
-})
-export class LogInPage {
-
-  public loginForm: any;
-
-  constructor(
-    public platform: Platform,
-    public params: NavParams,
-    public viewCtrl: ViewController,
-    public authService: Auth,
-    public formBuilder: FormBuilder
-  ) {
-    this.loginForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
-    });
-
-  }
-
-  loginUser() {
-
-    let email = this.loginForm.value.email;
-    let password = this.loginForm.value.password;
-    this.authService.login(email, password);
-    this.dismiss();
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
   }
 
 }

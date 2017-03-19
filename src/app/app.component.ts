@@ -9,9 +9,6 @@ import { AngularFire } from 'angularfire2';
 
 import firebase from 'firebase';
 
-// Testing
-import { ProfilePage } from '../pages/profile/profile';
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,7 +21,7 @@ export class MyApp {
     platform: Platform,
     app: App,
     private zone: NgZone,
-    public af: AngularFire
+    public af: AngularFire,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

@@ -6,15 +6,18 @@ import { ChatPage } from '../pages/chat/chat';
 import { SearchPage } from '../pages/search/search';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CollegeDetailPage } from '../pages/college-detail/college-detail';
-import { HomePage, LogInPage } from '../pages/home/home';
+import { HomePage } from '../pages/home/home';
+import { LogInPage } from '../pages/login-modal/login-modal';
+import { SignupModal } from '../pages/signup-modal/signup-modal';
 import { ProfilePage, HSPage } from '../pages/profile/profile';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { Colleges } from '../providers/colleges';
 import { Auth } from '../providers/auth';
 import { Profile } from '../providers/profile';
+import { Chat } from '../providers/chat';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -44,10 +47,12 @@ const myFirebaseAuthConfig = {
     LogInPage,
     ProfilePage,
     SignUpPage,
-    HSPage
+    HSPage,
+    SignupModal
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   bootstrap: [IonicApp],
@@ -62,14 +67,15 @@ const myFirebaseAuthConfig = {
     LogInPage,
     ProfilePage,
     SignUpPage,
-    HSPage
+    HSPage,
+    SignupModal
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Colleges,
     Auth,
     Profile,
-    Storage
+    Chat
   ]
 })
 export class AppModule {}

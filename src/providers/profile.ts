@@ -92,19 +92,29 @@ export class Profile {
 
   updateProfile(profile) {
     this.myProfile.set(profile);
+    // Save local copy of profile
+
+    this.storage.set('profile', profile)
+      .then(() => {
+        console.log('value set');
+      });
+
   }
+
   updateHS(newSchool, oldSchoolCode) {
-    // Remove student from old /highSchools
-    firebase.database().ref('highSchools').child(oldSchoolCode).child(this.currentUser['uid']).remove();
+    // If oldSchoolCode Remove student from old /highSchools
+    console.log(oldSchoolCode);
+    if (oldSchoolCode) {
+      firebase.database().ref('highSchools').child(oldSchoolCode).child(this.currentUser['uid']).remove();
+    }
     // Add user to new /highSchools
     firebase.database().ref('highSchools').child(newSchool.code).child(this.currentUser['uid']).set(true);
     // Update user/profile/highSchool name
-    this.myProfile.update({highSchool:
-      {
-        name: newSchool.name,
-        code: newSchool.code
-      }
+    this.myProfile.update({
+      hsName: newSchool.name,
+      hsCode: newSchool.code
     });
+
   }
 
 }

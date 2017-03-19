@@ -45,7 +45,7 @@ export class ProfilePage {
       familyIncome: [''],
       gender: [''],
       dob: [''],
-      hsName: [{value:'', disabled: true}],
+      hsName: [''],
       hsCode: ['']
     });
 
@@ -54,7 +54,7 @@ export class ProfilePage {
       // .subscribe(data => {
       //   this.profileService.updateProfile(data);
       // });
-      .subscribe(() => {
+      .subscribe((data) => {
         this.profileChanged = true;
       });
   }
@@ -63,23 +63,18 @@ export class ProfilePage {
     //this.myProfile = this.profileService.myProfile;
     this.profileService.myProfile
       .subscribe(subdata => {
-        //console.log('subscribe', subdata);
-        for (var control in subdata) {
-          // If updating highSchool, pull name of hs out of profile
-          if (control == 'highSchool') {
-            this.profileForm.controls['hsName'].patchValue(subdata[control].name, {
+        console.log('subscribe', subdata.$value);
+        if (subdata.$value) {
+          for (var control in subdata) {
+            this.profileForm.controls[control].patchValue(subdata[control], {
               emitEvent: false
             });
-            this.profileForm.controls['hsCode'].patchValue(subdata[control].code, {
-              emitEvent: false
-            });
-            continue;
           }
-          this.profileForm.controls[control].patchValue(subdata[control], {
-            emitEvent: false
-          });
+          this.saveProfile();
         }
+
         this.profileChanged = false;
+
       });
   }
 
@@ -133,56 +128,56 @@ export class ProfilePage {
       <ion-item>
         <ion-label>State</ion-label>
         <ion-select [(ngModel)]="state">
-            <ion-option value="AL">AL</ion-option>
-            <ion-option value="AK">AK</ion-option>
-            <ion-option value="AZ">AZ</ion-option>
-            <ion-option value="AR">AR</ion-option>
-            <ion-option value="CA">CA</ion-option>
-            <ion-option value="CO">CO</ion-option>
-            <ion-option value="CT">CT</ion-option>
-            <ion-option value="DE">DE</ion-option>
-            <ion-option value="FL">FL</ion-option>
-            <ion-option value="GA">GA</ion-option>
-            <ion-option value="HI">HI</ion-option>
-            <ion-option value="ID">ID</ion-option>
-            <ion-option value="IL">IL</ion-option>
-            <ion-option value="IN">IN</ion-option>
-            <ion-option value="IA">IA</ion-option>
-            <ion-option value="KS">KS</ion-option>
-            <ion-option value="KY">KY</ion-option>
-            <ion-option value="LA">LA</ion-option>
-            <ion-option value="ME">ME</ion-option>
-            <ion-option value="MD">MD</ion-option>
-            <ion-option value="MA">MA</ion-option>
-            <ion-option value="MI">MI</ion-option>
-            <ion-option value="MN">MN</ion-option>
-            <ion-option value="MS">MS</ion-option>
-            <ion-option value="MO">MO</ion-option>
-            <ion-option value="MT">MT</ion-option>
-            <ion-option value="NE">NE</ion-option>
-            <ion-option value="NV">NV</ion-option>
-            <ion-option value="NH">NH</ion-option>
-            <ion-option value="NJ">NJ</ion-option>
-            <ion-option value="NM">NM</ion-option>
-            <ion-option value="NY">NY</ion-option>
-            <ion-option value="NC">NC</ion-option>
-            <ion-option value="ND">ND</ion-option>
-            <ion-option value="OH">OH</ion-option>
-            <ion-option value="OK">OK</ion-option>
-            <ion-option value="OR">OR</ion-option>
-            <ion-option value="PA">PA</ion-option>
-            <ion-option value="RI">RI</ion-option>
-            <ion-option value="SC">SC</ion-option>
-            <ion-option value="SD">SD</ion-option>
-            <ion-option value="TN">TN</ion-option>
-            <ion-option value="TX">TX</ion-option>
-            <ion-option value="UT">UT</ion-option>
-            <ion-option value="VT">VT</ion-option>
-            <ion-option value="VA">VA</ion-option>
-            <ion-option value="WA">WA</ion-option>
-            <ion-option value="WV">WV</ion-option>
-            <ion-option value="WI">WI</ion-option>
-            <ion-option value="WY">WY</ion-option>
+            <ion-option text-wrap value="AL">AL</ion-option>
+            <ion-option text-wrap value="AK">AK</ion-option>
+            <ion-option text-wrap value="AZ">AZ</ion-option>
+            <ion-option text-wrap value="AR">AR</ion-option>
+            <ion-option text-wrap value="CA">CA</ion-option>
+            <ion-option text-wrap value="CO">CO</ion-option>
+            <ion-option text-wrap value="CT">CT</ion-option>
+            <ion-option text-wrap value="DE">DE</ion-option>
+            <ion-option text-wrap value="FL">FL</ion-option>
+            <ion-option text-wrap value="GA">GA</ion-option>
+            <ion-option text-wrap value="HI">HI</ion-option>
+            <ion-option text-wrap value="ID">ID</ion-option>
+            <ion-option text-wrap value="IL">IL</ion-option>
+            <ion-option text-wrap value="IN">IN</ion-option>
+            <ion-option text-wrap value="IA">IA</ion-option>
+            <ion-option text-wrap value="KS">KS</ion-option>
+            <ion-option text-wrap value="KY">KY</ion-option>
+            <ion-option text-wrap value="LA">LA</ion-option>
+            <ion-option text-wrap value="ME">ME</ion-option>
+            <ion-option text-wrap value="MD">MD</ion-option>
+            <ion-option text-wrap value="MA">MA</ion-option>
+            <ion-option text-wrap value="MI">MI</ion-option>
+            <ion-option text-wrap value="MN">MN</ion-option>
+            <ion-option text-wrap value="MS">MS</ion-option>
+            <ion-option text-wrap value="MO">MO</ion-option>
+            <ion-option text-wrap value="MT">MT</ion-option>
+            <ion-option text-wrap value="NE">NE</ion-option>
+            <ion-option text-wrap value="NV">NV</ion-option>
+            <ion-option text-wrap value="NH">NH</ion-option>
+            <ion-option text-wrap value="NJ">NJ</ion-option>
+            <ion-option text-wrap value="NM">NM</ion-option>
+            <ion-option text-wrap value="NY">NY</ion-option>
+            <ion-option text-wrap value="NC">NC</ion-option>
+            <ion-option text-wrap value="ND">ND</ion-option>
+            <ion-option text-wrap value="OH">OH</ion-option>
+            <ion-option text-wrap value="OK">OK</ion-option>
+            <ion-option text-wrap value="OR">OR</ion-option>
+            <ion-option text-wrap value="PA">PA</ion-option>
+            <ion-option text-wrap value="RI">RI</ion-option>
+            <ion-option text-wrap value="SC">SC</ion-option>
+            <ion-option text-wrap value="SD">SD</ion-option>
+            <ion-option text-wrap value="TN">TN</ion-option>
+            <ion-option text-wrap value="TX">TX</ion-option>
+            <ion-option text-wrap value="UT">UT</ion-option>
+            <ion-option text-wrap value="VT">VT</ion-option>
+            <ion-option text-wrap value="VA">VA</ion-option>
+            <ion-option text-wrap value="WA">WA</ion-option>
+            <ion-option text-wrap value="WV">WV</ion-option>
+            <ion-option text-wrap value="WI">WI</ion-option>
+            <ion-option text-wrap value="WY">WY</ion-option>
           </ion-select>
       </ion-item>
       <ion-item *ngIf="state">

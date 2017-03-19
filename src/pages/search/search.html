@@ -48,7 +48,7 @@
       <ion-item class="major_item">
         <ion-label>Majors</ion-label>
         <ion-select [(ngModel)]="majors" multiple="true" cancelText="Cancel" okText="Okay!" placeholder="Majors">
-
+          <ion-option value="PCIP01">Agriculture, Agriculture Operations, and Related Sciences</ion-option>
           <ion-option *ngFor="let major of majorsList" value="{{major[0]}}">{{major[1]}}</ion-option>
 
         </ion-select>

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/Rx';
 
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
@@ -10,7 +12,7 @@ export class Auth {
   public connected: Boolean; // TODO: Figure out how to make this an observable and subscribe to it
   fireAuth: any;
 
-  constructor(public af: AngularFire) {
+  constructor(public af: AngularFire, public http: Http) {
     af.auth.subscribe( user => {
       if (user) {
         this.fireAuth = user.auth;
@@ -45,54 +47,71 @@ export class Auth {
     // });
   }
 
+  checkUser(email) {
+    return firebase.auth().fetchProvidersForEmail(email);
+  }
+
   signUpUser(userData) {
     return this.af.auth.createUser({email: userData.email, password: userData.password})
+      // After creating user, create profile for user
       .then( newUser => {
-        if (userData.test == 'SAT') userData.actC = '';
-        else if (userData.test == 'ACT') { userData.satM = ''; userData.satR = '';}
-        if (userData.gpaScale == "100") userData.gpa = userData.gpa100;
-        else userData.gpa = userData.gpa4;
-        delete userData['gpa100'];
-        delete userData['gpa4'];
+        console.log(newUser.uid);
+        // If user selected SAT, delete ACT data
+        if (userData.academics.test == 'SAT') userData.academics.actC = '';
+        // If user selected ACT, delete SAT data
+        else if (userData.academics.test == 'ACT') { userData.academics.satM = ''; userData.academics.satR = '';}
+        // If no test selected, clear score data
+        else if (userData.academics.test == '') {
+          userData.academics.actC = ''; userData.academics.satM = ''; userData.academics.satR = '';
+        }
+
+        // Whatever GPA scale user selected, make a .gpa property
+        if (userData.academics.gpaScale == "100") userData.academics.gpa = userData.academics.gpa100;
+        else if (userData.academics.gpaScale == '') userData.academics.gpa = '';
+        else userData.academics.gpa = userData.academics.gpa4 / 10;
+        delete userData.academics['gpa100'];
+        delete userData.academics['gpa4'];
 
         this.usersRef.child(newUser.uid).child('profile').set({
           email: userData.email,
           firstName: userData.firstName,
-          gpaScale: userData.gpaScale,
-          gpa: userData.gpa,
-          test: userData.test,
-          satM: userData.satM,
-          satR: userData.satR,
-          actC: userData.actC,
-          state: userData.state,
+          gpaScale: userData.academics.gpaScale,
+          gpa: userData.academics.gpa,
+          test: userData.academics.test,
+          satM: userData.academics.satM,
+          satR: userData.academics.satR,
+          actC: userData.academics.actC,
           race: userData.race,
-          familyIncome: userData.familyIncome
         });
+
+      }) // .then
+      .then( (newUser) => {
+        //this.calculateOdds(userData, newUser);
       })
       .catch( (error: any) => {
         console.log(error);
       });
-    /*console.log(userData);
-    firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(newUser => {
-        this.usersRef.child(newUser.uid).child('profile').set({
-          firstName: userData.firstName,
-          gpaScale: userData.gpaScale,
-          gpa100: userData.gpa100,
-          gpa4: userData.gpa4,
-          test: userData.test,
-          satM: userData.satM,
-          satR: userData.satR,
-          actC: userData.actC,
-          state: userData.state,
-          race: userData.race,
-          familyIncome: userData.familyIncome
-        });
-      })
-      .catch((error: any) => {
-        console.log(error);
-        console.log(error.code);
-      });*/
+
+  }
+
+  // Call to microservice that will calculate odds for all schools.
+  calculateOdds(userData, newUser) {
+    console.log(userData);
+    console.log(newUser);
+    this.http.post('https://us-central1-college-search-160414.cloudfunctions.net/newUser  ', {userData: userData, newUser: newUser})
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data);
+      });
+  };
+
+  // Test function for GCloud Functions
+  testGCloud(message) {
+    this.http.post('https://us-central1-college-search-160414.cloudfunctions.net/helloHttp', {message: message})
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data);
+      });
   }
 
 }

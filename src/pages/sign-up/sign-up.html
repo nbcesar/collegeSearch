@@ -1,7 +1,67 @@
+<ion-header  no-border>
+  <ion-navbar primary class="header">
+    <ion-title>Mr.Cesar</ion-title>
+  </ion-navbar>
+</ion-header>
 
-<ion-content padding fullscreen class="no-scroll">
+<ion-content padding>
 
-  <ion-slides>
+  <ion-grid no-padding>
+
+    <ion-row>
+      <ion-col>
+
+        <ion-list no-lines class="chat-list">
+          <ion-item *ngFor="let message of messagesList">
+            <ion-avatar item-left *ngIf="message.from == 'MrCesar'">
+              <img class="logo" src="../assets/images/mr-cesar-face.png">
+            </ion-avatar>
+            <div class="speech-bubble" text-wrap *ngIf="message.from == 'MrCesar' && message.text != '...'">
+              <h2>{{ message.text }}</h2>
+            </div>
+            <div class="speech-bubble loading" text-wrap *ngIf="message.from == 'MrCesar' && message.text == '...'">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div item-right class="response" text-wrap *ngIf="message.from != 'MrCesar'">
+              <h2>{{ message.text }}</h2>
+            </div>
+          </ion-item>
+          <!-- <ion-item>
+            <ion-avatar item-left>
+              <img class="logo" src="../assets/images/mr-cesar-face.png">
+            </ion-avatar>
+            <div class="speech-bubble" text-wrap>
+              <h2>Hello</h2>
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <ion-avatar item-left>
+              <img class="logo" src="../assets/images/mr-cesar-face.png">
+            </ion-avatar>
+            <div class="speech-bubble" text-wrap>
+              <h2>I'm Mr. Cesar, your Digital College Counselor.</h2>
+            </div>
+          </ion-item>
+
+          <ion-item>
+            <div item-right class="response" text-wrap>
+              <h2>Hi, Mr. Cesar!</h2>
+            </div>
+          </ion-item> -->
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  <!-- <ion-slides>
 
     <ion-slide class="slide1">
       <ion-row class="inputs">
@@ -34,9 +94,8 @@
     </ion-slide>
 
     <ion-slide class="slide2">
-
       <ion-row class="gpa-radio">
-        <ion-col radio-group [(ngModel)]="gpaScale">
+        <ion-col class="gpa-radio-col" radio-group [(ngModel)]="gpaScale">
           <ion-item>
             <ion-label>100</ion-label>
             <ion-radio value="100"></ion-radio>
@@ -44,6 +103,10 @@
           <ion-item>
             <ion-label>4.0</ion-label>
             <ion-radio value="4"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Not Sure</ion-label>
+            <ion-radio value=""></ion-radio>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -94,19 +157,23 @@
             <ion-label>ACT</ion-label>
             <ion-radio value="ACT"></ion-radio>
           </ion-item>
+          <ion-item>
+            <ion-label>Not Sure</ion-label>
+            <ion-radio value=""></ion-radio>
+          </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row class="sat-ranges" *ngIf="test=='SAT'">
         <ion-col>
-          <ion-item>
+          <ion-item no-lines>
             <ion-label>SAT M: {{ satM }}</ion-label>
             <ion-range [(ngModel)]="satM" min="200" max="800" step="10" tappable>
               <ion-icon range-left name="arrow-back"></ion-icon>
               <ion-icon range-right name="arrow-forward"></ion-icon>
             </ion-range>
           </ion-item>
-          <ion-item>
+          <ion-item no-lines>
             <ion-label>SAT R: {{ satR }}</ion-label>
             <ion-range [(ngModel)]="satR" min="200" max="800" step="10" tappable>
               <ion-icon range-left name="arrow-back"></ion-icon>
@@ -118,7 +185,7 @@
 
       <ion-row class="act-ranges" *ngIf="test=='ACT'">
         <ion-col>
-          <ion-item tappable>
+          <ion-item no-lines>
             <ion-label>ACT: {{ actC }}</ion-label>
             <ion-range [(ngModel)]="actC" min="1" max="36">
               <ion-icon range-left name="arrow-back"></ion-icon>
@@ -126,7 +193,11 @@
             </ion-range>
           </ion-item>
         </ion-col>
+      </ion-row>
 
+      <ion-row class="act-ranges" *ngIf="test==''">
+        <ion-col>
+        </ion-col>
       </ion-row>
 
       <ion-row class="buttons">
@@ -219,6 +290,7 @@
                 <ion-option value="income3">$48,001-$75,000</ion-option>
                 <ion-option value="income4">$75,001-$110,000</ion-option>
                 <ion-option value="income5">$110,001+</ion-option>
+                <ion-option value="income0">Not Sure</ion-option>
               </ion-select>
             </ion-item>
           </form>
@@ -230,7 +302,7 @@
           <button class="prev-button" ion-button icon-only color="dark" (click)="prev()">
             <ion-icon name="arrow-back"></ion-icon>
           </button>
-          <button class="next-button" ion-button color="danger" (click)="signUpUser()">
+          <button class="next-button" ion-button color="danger" (click)="next()">
             Let's Go
           </button>
         </ion-col>
@@ -249,6 +321,31 @@
         <h2>{{ welcomeMessage[slides.getActiveIndex()]}}</h2>
       </ion-item>
     </ion-list>
-
-  </div>
+  </div> -->
 </ion-content>
+
+<ion-footer *ngIf="showButtonFooter">
+  <ion-buttons right>
+    <button ion-button color="primary" round
+      *ngFor="let button of buttonList"
+      (click)="buttonResponse(button)"
+      class="response-buttons">
+      {{ button.text }}
+    </button>
+  </ion-buttons>
+</ion-footer>
+
+<ion-footer *ngIf="showInputFooter">
+  <!-- <ion-toolbar> -->
+    <ion-grid no-padding>
+      <ion-row class="footer-row">
+        <ion-col col-9 class="footer-input">
+          <ion-input #input type="text" placeholder="Type a message..."></ion-input>
+        </ion-col>
+        <ion-col col-3>
+          <button (click)="inputResponse()" ion-button color="primary">Send</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  <!-- </ion-toolbar> -->
+</ion-footer>

@@ -3,53 +3,151 @@ page-home {
   .no-scroll .scroll-content {
     overflow:hidden;
   }
-
-
-  ion-slides {
-
-    height: 90%;
-
-    ion-slide {
-      background-size:cover;
-      display: flex;
-      align-items: center !important;
-    }
-
-    .slide1 {
-      background-image: url('http://placehold.it/350x150');
-      background-blend-mode: darken;
-    }
-
-    .slide2 {
-      background-image: url('http://placehold.it/350x150');
-    }
-
-    .slide3 {
-      background-image: url('http://placehold.it/350x150');
-    }
-
-    h1 {
-      color: white;
-      background-color: rgba(0,0,0,.6);
-      font-size: 2em;
-      font-weight: bold;
-    }
-  }
-
-  .buttons {
-    height: 25%;
+  .scroll-content {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    //background-color: rgb(92, 139, 159);
+    //background-color: #FF6700;
+    background-color: #00A88C;
   }
 
-}
+  .ion-header {
+    background-color: #00A88C !important;
+  }
+  .toolbar-background {
+    background-color: #00A88C;
+  }
+
+  .toolbar-title {
+    text-align: center;
+
+    font-family: Lobster;
+  }
+
+  .grid {
+    height: 100%;
+    max-width: 420px !important;
+    justify-content: center;
+    .image-row {
+
+    }
+    .button-row {
+
+    }
+  }
+
+  .speech-bubble {
+    background-color: #fff;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: 1.5em;
+      margin: 0;
+      text-align: center;
+      padding: 2px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-top: 15%;
+      padding-bottom: 15%;
 
 
-.input-cover {
-    position: static;
-}
+    }
 
-.test {
-  //color: red;
+    span {
+      height: 15px;
+      width: 15px;
+      float: left;
+      margin: 0 1px;
+      background-color: #9E9EA1;
+      display: block;
+      border-radius: 50%;
+      opacity: 0.4;
+      @for $i from 1 through 3 {
+        &:nth-of-type(#{$i}) {
+          animation: 1s blink infinite ($i * .3333s);
+        }
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes bulge {
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+
+
+
+  }
+
+
 }
+//   .no-scroll .scroll-content {
+//     overflow:hidden;
+//   }
+//
+//
+//   ion-slides {
+//
+//     height: 90%;
+//
+//     ion-slide {
+//       background-size:cover;
+//       display: flex;
+//       align-items: center !important;
+//     }
+//
+//     .slide1 {
+//       background-image: url('http://placehold.it/350x150');
+//       background-blend-mode: darken;
+//     }
+//
+//     .slide2 {
+//       background-image: url('http://placehold.it/350x150');
+//     }
+//
+//     .slide3 {
+//       background-image: url('http://placehold.it/350x150');
+//     }
+//
+//     h1 {
+//       color: white;
+//       background-color: rgba(0,0,0,.6);
+//       font-size: 2em;
+//       font-weight: bold;
+//     }
+//   }
+//
+//   .buttons {
+//     height: 25%;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: center;
+//   }
+//
+// }
+//
+//
+// .input-cover {
+//     position: static;
+// }
+//
+// .test {
+//   //color: red;
+// }

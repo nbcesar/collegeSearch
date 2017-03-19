@@ -1,7 +1,36 @@
 page-profile {
 
-  .profile-pic {
+  .header .toolbar-background {
+    background-color: #00A88C !important;
+  }
 
+  .scroll-content {
+    background: #fff;
+  }
+
+  .grid {
+    height: 100%;
+    max-width: 720px !important;
+  }
+
+  .item {
+    background-color: #fff;
+  }
+
+  .item-divider {
+    background-color: #f4f4f4;
+  }
+
+  .profile-pic {
+    img {
+      max-height: 150px;
+    }
+  }
+
+  .pic-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   ion-item-divider .label{
@@ -12,6 +41,9 @@ page-profile {
     text-align: right !important;
   }
 
+  .name-email .item {
+    height: 33%;
+  }
   .name-email .text-input{
     text-align: left !important;
   }

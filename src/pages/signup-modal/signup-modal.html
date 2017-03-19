@@ -1,0 +1,174 @@
+<ion-content padding>
+
+  <ion-grid *ngIf="prompt=='email'">
+    <ion-row justify-content-center>
+      <ion-col col-12 class="img-col">
+        <img src="../assets/images/logo.png">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+
+      <ion-col col-12 class="form-col">
+        <form [formGroup]="signupForm" (submit)="getEmail()" novalidate>
+          <ion-item no-lines>
+            <ion-label stacked>Email</ion-label>
+            <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
+          </ion-item>
+          <ion-item no-lines>
+            <ion-label stacked>Password</ion-label>
+            <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+          </ion-item>
+          <ion-item no-lines>
+            <button ion-button large full type="submit" color="primary" [disabled]="!signupForm.valid">Create Account</button>
+          </ion-item>
+          <ion-item no-lines>
+            <button ion-button full color="danger" (click)="dismiss()">Cancel</button>
+          </ion-item>
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="prompt=='academics' && screen=='gpa'">
+
+    <ion-row>
+      <ion-col col-12>
+        <h1>GPA</h1>
+        <p>Select your GPA scale and then use the slider to pick your GPA.</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="gpa-radio">
+      <ion-col class="gpa-radio-col" radio-group [(ngModel)]="academics.gpaScale">
+        <ion-item>
+          <ion-label>100</ion-label>
+          <ion-radio value="100"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>4.0</ion-label>
+          <ion-radio value="4"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Not Sure</ion-label>
+          <ion-radio value=""></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row class="gpa-values">
+      <ion-col col-12 text-center>
+        <span *ngIf="gpaScale=='4'">{{ gpa4 / 10 }}</span>
+        <span *ngIf="gpaScale=='100'">{{ gpa100 }}</span>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row class="gpa-ranges">
+      <ion-col>
+        <ion-item no-lines *ngIf="academics.gpaScale=='100'">
+          <ion-label>GPA: {{ academics.gpa100 }}</ion-label>
+          <ion-range [(ngModel)]="academics.gpa100" min="65" max="100" >
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-item no-lines *ngIf="academics.gpaScale=='4'">
+          <ion-label>GPA: {{ academics.gpa4 / 10 }}</ion-label>
+          <ion-range [(ngModel)]="academics.gpa4" min="20" max="40">
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="buttons">
+      <ion-col col-3>
+        <button ion-button full color="danger" (click)="dismiss()">Cancel</button>
+      </ion-col>
+      <ion-col col-9>
+        <button ion-button full color="primary" (click)="goToTest()">Next</button>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+
+  <ion-grid *ngIf="prompt=='academics' && screen=='testing'">
+
+    <ion-row>
+      <ion-col col-12>
+        <h1>Testing</h1>
+        <p>Select your test and then use the slider to give your best scores.</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="test-radio">
+      <ion-col radio-group [(ngModel)]="academics.test">
+        <ion-item>
+          <ion-label>SAT</ion-label>
+          <ion-radio value="SAT"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>ACT</ion-label>
+          <ion-radio value="ACT"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Not Sure</ion-label>
+          <ion-radio value=""></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="sat-ranges" *ngIf="academics.test=='SAT'">
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label>SAT M: {{ academics.satM }}</ion-label>
+          <ion-range [(ngModel)]="academics.satM" min="200" max="800" step="10" tappable>
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-item no-lines>
+          <ion-label>SAT R: {{ academics.satR }}</ion-label>
+          <ion-range [(ngModel)]="academics.satR" min="200" max="800" step="10" tappable>
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="act-ranges" *ngIf="academics.test=='ACT'">
+      <ion-col>
+        <ion-item no-lines>
+          <ion-label>ACT: {{ academics.actC }}</ion-label>
+          <ion-range [(ngModel)]="academics.actC" min="1" max="36">
+            <ion-icon range-left name="arrow-back"></ion-icon>
+            <ion-icon range-right name="arrow-forward"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="act-ranges" *ngIf="academics.test==''">
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="buttons">
+      <ion-col col-4>
+        <button ion-button full color="danger" (click)="dismiss()">Cancel</button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button full color="primary" (click)="goToGPA()">GPA</button>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button full color="primary" (click)="submitAcademics()">Next</button>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+
+</ion-content>

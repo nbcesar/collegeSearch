@@ -21,15 +21,20 @@ page-search {
     margin-bottom: 0 !important;
   }
 
-
-  .alert-checkbox-label {
+  .alert-md.alert-checkbox-label {
     white-space: normal !important;
   }
 
+  .alert-ios .alert-checkbox-label{
+    white-space: pre-line !important;
+  }
 
+  .alert-md .alert-radio-label{
+    white-space: pre-line !important;
+  }
 
-  .alert-radio-label {
-    white-space: normal !important;
+  .alert-wp .alert-checkbox-label{
+    white-space: pre-line !important;
   }
 
   .college_stats_row {

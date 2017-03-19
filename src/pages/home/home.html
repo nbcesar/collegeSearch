@@ -1,27 +1,39 @@
+<ion-header  no-border>
+  <ion-navbar primary>
+    <ion-title>Mr.Cesar</ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content padding class="no-scroll">
 
-  <ion-slides autoplay="2500">
+  <ion-grid fixed>
+    <ion-row class="image-row" justify-content-center >
+      <ion-col col-4 align-self-end>
 
-    <ion-slide class="slide1">
-      <h1>Welcome slide 1</h1>
-      <h1>Image TBD</h1>
-    </ion-slide>
+        <img src="../assets/images/mr-cesar-face.png">
 
-    <ion-slide class="slide2">
-      <h1>Welcome slide 2</h1>
-      <h1>Image TBD</h1>
-    </ion-slide>
 
-    <ion-slide class="slide3">
-      <h1>Welcome slide 3</h1>
-      <h1>Image TBD</h1>
-    </ion-slide>
+      </ion-col>
+      <ion-col col-8>
+        <div class="speech-bubble">
+          <p class="text" *ngIf="welcome_text">{{ welcome_text }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
 
-  </ion-slides>
-
-  <div class="buttons">
-    <button ion-button block color="dark" (click)="logInForm()">Log in</button>
-    <button ion-button block color="light" (click)="signUpForm()">Get Started</button>
-  </div>
+    <ion-row class="button-row" justify-content-center>
+      <ion-col col-12>
+        <button ion-button block color="light" (click)="signUpForm()">Get Started</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
+
+<ion-footer>
+  <ion-row>
+    <button class="prev-button" ion-button clear full color="dark" (click)="logInForm()">
+      Already have an account? Log in here...
+    </button>
+  </ion-row>
+</ion-footer>
